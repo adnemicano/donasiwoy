@@ -38,7 +38,9 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Login</h1>
                             </div>
-                            <form class="user">
+                            <form class="user" action="{{route('login.authenticate')}}"  method="POST">
+                                @csrf
+                                {{-- name harus sesuai dengan kolom yang ada di database --}}
                                 <div class="form-group">
                                     <input type="email" name="email" class="form-control form-control-user" placeholder="Email">
                                 </div>
@@ -47,7 +49,7 @@
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Daftar
+                                    Login
                                 </button>
                                 <hr>
                             </form>

@@ -38,7 +38,9 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Buat Akun</h1>
                             </div>
-                            <form class="user">
+                            <form class="user" action="{{route('register.store')}}" method="POST">
+                                @csrf
+                                {{-- name harus sesuai dengan yang di database --}}
                                 <div class="form-group">
                                     <input type="text" name="fullname" class="form-control form-control-user" placeholder="Nama Lengkap">
                                 </div>

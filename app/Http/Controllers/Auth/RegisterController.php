@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert as Swal;
 
 class RegisterController extends Controller
 {
@@ -16,6 +18,22 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
+        // menyimpan semua request
+        $data = $request->all();
 
+        // mengubah inputan password menjadi random
+        $data['password'] = bcrypt($request->password);
+
+        // membuat data
+        $user = User::create($data);
+
+        // memeberikan role user
+        $user->assignRole('user');
+
+        // menampilkan alert
+        Swal::toast('Register berhasil silakan login', 'Succes');
+
+        return redirect()->route('login');
     }
+
 }
