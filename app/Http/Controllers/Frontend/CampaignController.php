@@ -6,12 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Models\Campaign;
 use Illuminate\Http\Request;
 
-
 class CampaignController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $campaigns = Campaign::all();
+        $query = Campaign::query();
+
+        // Filter Search
+        if ($request->has('search') && $request->search != '') {
+            $query->where('title', 'like', '%' . $request->search . '%')
+                ->orWhere('story', 'like', '%' . $request->search . '%');
+        }
+
+        // Sort by Date
+        if ($request->has('sort') && $request->sort == 'newest') {
+            $query->orderBy('created_at', 'desc');
+        } elseif ($request->has('sort') && $request->sort == 'oldest') {
+            $query->orderBy('created_at', 'asc');
+        }
+
+        // Paginate the results
+        $campaigns = $query->paginate(9);
 
         return view('pages.frontend.campaign', compact('campaigns'));
     }

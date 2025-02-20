@@ -20,7 +20,7 @@ class CampaignController extends Controller
 
         return view('pages.admin.campaign.index', compact('campaigns'));
     }
-
+    
     /**
      * menampilkan halaman untuk membuat campaign baru.
      */

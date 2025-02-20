@@ -5,8 +5,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Frontend\CampaignController;
 use App\Http\Controllers\Frontend\CaraDonasiController;
 use App\Http\Controllers\Frontend\DonationController;
-use App\Models\Campaign;
-use Illuminate\Auth\Events\Logout;
+use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Frontend\NewsController as FrontendNewsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,43 +14,62 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| Berikut adalah tempat untuk mendaftarkan semua route aplikasi Anda.
+| Route ini akan di-load oleh RouteServiceProvider.
+| Semua route akan menggunakan middleware "web".
 |
 */
 
+// Route halaman utama
 Route::get('/', function () {
     return view('pages.index');
 })->name('home');
 
-Route::get('/campaigns', [CampaignController::class, 'index'])->name('campaigns');
-Route::get('/campaigns/{slug}', [CampaignController::class, 'show'])->name('campaigns.show');
+// Route untuk halaman frontend
+Route::prefix('campaigns')->group(function () {
+    Route::get('/', [CampaignController::class, 'index'])->name('campaigns.index');
+    Route::get('/{slug}', [CampaignController::class, 'show'])->name('campaigns.show');
+});
 
+// Route untuk halaman frontend news
+Route::prefix('news')->group(function () {
+    Route::get('/', [FrontendNewsController::class, 'index'])->name('news.index');
+    Route::get('/{slug}', [FrontendNewsController::class, 'show'])->name('news.show');
+});
+
+
+
+// Route untuk halaman Cara Donasi
 Route::get('/cara-donasi', [CaraDonasiController::class, 'index'])->name('cara-donasi');
 
+// Route untuk user yang membutuhkan autentikasi
 Route::middleware(['auth'])->group(function () {
+    // Donasi
     Route::post('/donasi', [DonationController::class, 'store'])->name('donation.store');
 });
 
-
+// Route untuk halaman admin dengan middleware "auth"
 Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['auth'])->name('admin.')->group(function () {
-    // membuat route untuk halaman dashboard, ketika user mengakses /admin
+    // Halaman dashboard
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
+    // CRUD untuk campaigns
     Route::resource('campaigns', 'CampaignController');
+
+    Route::resource('news', 'NewsController');
+
 });
 
-// membuat route untuk halaman login, ketika user mengakses /login
-// maka akan diarahkan ke LoginController dengan method index
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+// Route untuk autentikasi
+Route::prefix('auth')->group(function () {
+    // Login
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 
-// membuat route untuk halaman login, ketika user mengakses /register
-// maka akan diarahkan ke LoginController dengan method index
-Route::get('/register', [RegisterController::class, 'index'])->name('register');
-Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+    // Register
+    Route::get('/register', [RegisterController::class, 'index'])->name('register');
+    Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
-// membuat route untuk halaman login, ketika user mengakses /logout
-// maka akan diarahkan ke LoginController dengan method index
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    // Logout
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+});

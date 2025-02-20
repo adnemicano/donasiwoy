@@ -2,90 +2,145 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <title>DonasiWoy - Register</title>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
 
-    <!-- Custom fonts for this template-->
-    <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+        .login-container {
+            display: flex;
+            width: 800px;
+            height: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #fff;
+        }
 
-    <!-- Custom styles for this template-->
-    <link href="{{ asset('assets/css/sb-admin-2.min.css')}}" rel="stylesheet">
+        .left-section {
+            flex: 1;
+            background-color: #dcdcdc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
+        .left-section img {
+            width: 310px;
+            height: auto;
+        }
+
+        .right-section {
+            flex: 1.5;
+            padding: 20px;
+            background: linear-gradient(135deg, #004d40, #26a69a);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #004d40;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background-color: #26a69a;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .links a {
+            color: #cfd8dc;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
-<body class="bg-gradient-primary">
-
-    <div class="container">
-        @include('sweetalert::alert')
-
-
-        <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="card-body p-0">
-                <!-- Nested Row within Card Body -->
-                <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-                    <div class="col-lg-7">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Buat Akun</h1>
-                            </div>
-                            <form class="user" action="{{route('register.store')}}" method="POST">
-                                @csrf
-                                {{-- name harus sesuai dengan yang di database --}}
-                                <div class="form-group">
-                                    <input type="text" name="fullname" class="form-control form-control-user" placeholder="Nama Lengkap">
-                                </div>
-                                <div class="form-group">
-                                    <input type="number" name="phone_number" class="form-control form-control-user" placeholder="Nomer HP">
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" name="email" class="form-control form-control-user" placeholder="Email">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="password" class="form-control form-control-user" placeholder="Password">
-                                </div>
-
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Daftar
-                                </button>
-                                <hr>
-                            </form>
-                            <hr>
-                            <div class="text-center">
-                                <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div>
-                            <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<body>
+    <div class="login-container">
+        <!-- Left Section (Profile Image) -->
+        <div class="left-section">
+            <img src="{{ asset('assets/img/amarbiru.jpg') }}" alt="Profile Image">
         </div>
 
+        <!-- Right Section (Login Form) -->
+        <div class="right-section">
+            <h2>Buat Akun</h2>
+            <form class="user" action="{{ route('register.store') }}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <input type="text" name="fullname" placeholder="Nama Lengkap">
+                </div>
+                <div class="form-group">
+                    <input type="number" name="phone_number" class="form-control form-control-user"
+                        placeholder="Nomer HP">
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" class="form-control form-control-user" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control form-control-user"
+                        placeholder="Password">
+                </div>
+                <button type="submit" class="btn-login">Register</button>
+            </form>
+            <div class="links">
+                <a href="forgot-password.html">Forgot Password?</a><br>
+                <a href="{{ route('login') }}">Already have an account? Login!</a>
+            </div>
+        </div>
     </div>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('assets/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('assets/js/sb-admin-2.min.js')}}"></script>
-
-    {{-- untuk memanggil file yang berada pada folder public kita bisa menggunakan {{ asset('Lokasipath')}} --}}
-
 </body>
+
+
 
 </html>

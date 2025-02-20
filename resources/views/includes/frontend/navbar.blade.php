@@ -2,7 +2,7 @@
     <div class="container">
         <!-- Bagian Logo -->
         <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" width="100%" height="50">
+            <img src="{{ asset('assets/img/logo-donasi-woy.png') }}" alt="Logo" width="100%" height="50">
         </a>
 
         <!-- Toggle Button untuk Responsive -->
@@ -20,14 +20,18 @@
                 </li>
                 <li class="nav-item ms-4">
                     <a class="nav-link {{ request()->is('campaigns') ? 'active' : '' }}"
-                        href="{{ route('campaigns') }}">Campaign</a>
+                        href="{{ route('campaigns.index') }}">Campaign</a>
                 </li>
                 <li class="nav-item ms-4">
-                    <a class="nav-link" href="#">Berita</a>
+                    <a class="nav-link {{ request()->is('news') ? 'active' : '' }}"
+                        href="{{ route('news.index') }}">Berita</a>
                 </li>
                 <li class="nav-item ms-4">
                     <a class="nav-link {{ request()->is('cara-donasi') ? 'active' : '' }}"
                         href="{{ route('cara-donasi') }}">Cara Donasi</a>
+                </li>
+                <li class="nav-item ms-4">
+                    <a class="nav-link" href="#">Petisi</a>
                 </li>
 
             </ul>
