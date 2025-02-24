@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\News;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert as Swal;
+use Illuminate\Support\Facades\Storage;
 
 
 class NewsController extends Controller
@@ -58,16 +59,49 @@ class NewsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $news = News::findOrFail($id);
+        return view('pages.admin.news.edit', compact('news'));//
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        //
+{
+    // Validasi input dari request
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'content' => 'required|string',
+        'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    // Cari news berdasarkan ID
+    $news = News::findOrFail($id);
+
+    // Ambil semua data dari request
+    $data = $request->all();
+
+    // Perbarui slug berdasarkan title baru
+    $data['slug'] = Str::slug($request->title);
+
+    // Jika ada file thumbnail baru, simpan dan hapus yang lama
+    if ($request->hasFile('thumbnail')) {
+        if ($news->thumbnail) {
+            Storage::disk('public')->delete($news->thumbnail);
+        }
+        $data['thumbnail'] = $request->file('thumbnail')->store('assets/news', 'public');
     }
+
+    // Perbarui data news
+    $news->update($data);
+
+    // Tampilkan alert sukses
+    Swal::toast('News berhasil diperbarui', 'success');
+
+    // Redirect ke halaman daftar news
+    return redirect()->route('admin.news.index');
+}
+
 
     /**
      * Remove the specified resource from storage.
