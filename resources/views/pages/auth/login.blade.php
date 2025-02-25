@@ -110,7 +110,7 @@
     <div class="login-container">
         <!-- Left Section (Profile Image) -->
         <div class="left-section">
-            <img src="{{ asset('assets/img/amarbiru.jpg') }}" alt="Profile Image">
+            <img src="{{ asset('assets/img/donasilogin.jpg') }}" alt="Profile Image">
         </div>
 
         <!-- Right Section (Login Form) -->
