@@ -34,13 +34,13 @@ class NewsController extends Controller
         // Ambil 3 berita terbaru (tidak termasuk headline)
         $latestNews = News::orderBy('created_at', 'desc')->skip(3)->take(3)->get();
 
-        return view('pages.frontend.news', compact('news','headlineNews', 'latestNews'));
+        return view('pages.frontend.news.news', compact('news','headlineNews', 'latestNews'));
     }
 
     public function show($slug)
     {
         $news = News::where('slug', $slug)->firstOrFail();
 
-        return view('pages.frontend.news-detail', compact('news'));
+        return view('pages.frontend.news.news-detail', compact('news'));
     }
 }

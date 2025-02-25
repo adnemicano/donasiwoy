@@ -37,6 +37,6 @@ class DonationController extends Controller
             'snap_token' => $snapToken,
         ];
 
-        return view('pages.frontend.donation', compact('details'));
+        return view('pages.frontend.campaign.donation', compact('details'));
     }
 }

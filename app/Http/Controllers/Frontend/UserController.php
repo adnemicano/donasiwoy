@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Http\Controllers\Frontend;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+
+class UserController extends Controller
+{
+    public function profile()
+    {
+        return view('pages.frontend.user.profile', ['user' => Auth::user()]);
+    }
+
+    public function edit()
+    {
+        return view('pages.frontend.user.edit-profile', ['user' => Auth::user()]);
+    }
+
+    public function update(Request $request)
+    {
+        $user = Auth::user(); // Ambil user yang sedang login
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'User tidak ditemukan.');
+        }
+
+        // Validasi input
+        $request->validate([
+            'fullname' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'phone_number' => 'nullable|string|max:20',
+            'avatar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        // Update data user
+        $user->fullname = $request->fullname;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone_number;
+
+        // Cek apakah ada file avatar yang diupload
+        if ($request->hasFile('avatar')) {
+            // Hapus avatar lama jika ada
+            if ($user->avatar) {
+                Storage::delete('public/' . $user->avatar);
+            }
+
+            // Simpan avatar baru
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $avatarPath;
+        }
+
+        dd($user);
+        $user->save();
+
+        return redirect()->route('profile')->with('success', 'Profil berhasil diperbarui!');
+    }
+
+}

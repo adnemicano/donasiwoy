@@ -30,9 +30,6 @@
                     <a class="nav-link {{ request()->is('cara-donasi') ? 'active' : '' }}"
                         href="{{ route('cara-donasi') }}">Cara Donasi</a>
                 </li>
-                <li class="nav-item ms-4">
-                    <a class="nav-link" href="#">Petisi</a>
-                </li>
 
             </ul>
             @auth
@@ -43,8 +40,13 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
+                            <a class="dropdown-item" href="{{ route('profile') }}">Profil</a>
+                        </li>
+                        <li>
                             <a class="dropdown-item"
-                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
+                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
                         </li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf

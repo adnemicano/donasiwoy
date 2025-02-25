@@ -15,4 +15,6 @@ class CampaignDonation extends Model
         'value',
         'status'
     ];
+
+    
 }

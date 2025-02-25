@@ -7,6 +7,8 @@ use App\Http\Controllers\Frontend\CaraDonasiController;
 use App\Http\Controllers\Frontend\DonationController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Frontend\NewsController as FrontendNewsController;
+use App\Http\Controllers\Frontend\UserController as FrontendUserController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -73,3 +75,10 @@ Route::prefix('auth')->group(function () {
     // Logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [FrontendUserController::class, 'profile'])->name('profile');
+    Route::get('/profile/edit', [FrontendUserController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [FrontendUserController::class, 'update'])->name('profile.update');
+});
+

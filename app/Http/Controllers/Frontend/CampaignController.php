@@ -28,13 +28,13 @@ class CampaignController extends Controller
         // Paginate the results
         $campaigns = $query->paginate(9);
 
-        return view('pages.frontend.campaign', compact('campaigns'));
+        return view('pages.frontend.campaign.campaign', compact('campaigns'));
     }
 
     public function show($slug)
     {
         $campaign = Campaign::where('slug', $slug)->firstOrFail();
 
-        return view('pages.frontend.campaign-detail', compact('campaign'));
+        return view('pages.frontend.campaign.campaign-detail', compact('campaign'));
     }
 }

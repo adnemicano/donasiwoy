@@ -9,6 +9,6 @@ class CaraDonasiController extends Controller
 {
     public function index()
     {
-        return view('pages.frontend.cara-donasi');
+        return view('pages.frontend.cara-donasi.cara-donasi');
     }
 }
