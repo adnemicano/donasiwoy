@@ -7,9 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+
 
 class UserController extends Controller
 {
+    use Notifiable;
+
     public function profile()
     {
         return view('pages.frontend.user.profile', ['user' => Auth::user()]);
@@ -22,8 +27,9 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        $user = Auth::user(); // Ambil user yang sedang login
-
+        /** @var User $user */
+        $user = Auth::user();
+        
         if (!$user) {
             return redirect()->back()->with('error', 'User tidak ditemukan.');
         }
@@ -53,8 +59,12 @@ class UserController extends Controller
             $user->avatar = $avatarPath;
         }
 
-        dd($user);
-        $user->save();
+        $user->update([
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+        ]);
+
 
         return redirect()->route('profile')->with('success', 'Profil berhasil diperbarui!');
     }

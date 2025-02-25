@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -51,6 +52,6 @@ class User extends Authenticatable
         return $this->avatar ? asset('storage/' . $this->avatar) : asset('assets/img/default-avatar.jpg');
     }
 
-    
+
 
 }
