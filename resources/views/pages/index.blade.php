@@ -26,7 +26,8 @@
 
                 <!-- Gambar Tengah -->
                 <div style="flex: 1; display: flex; justify-content: center;">
-                    <img src="{{ asset('assets/img/vektor-home.png') }}" alt="Gambar Orang" style="width: 160%; max-width: 800px; margin-bottom: -50px;" />
+                    <img src="{{ asset('assets/img/vektor-home.png') }}" alt="Gambar Orang"
+                        style="width: 160%; max-width: 800px; margin-bottom: -50px;" />
                 </div>
 
                 <!-- Konten Kanan -->
@@ -43,6 +44,8 @@
     </section>
 
     <section>
+
+        
 
     </section>
 

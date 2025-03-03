@@ -29,7 +29,7 @@ class UserController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        
+
         if (!$user) {
             return redirect()->back()->with('error', 'User tidak ditemukan.');
         }
