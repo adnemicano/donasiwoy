@@ -42,12 +42,41 @@
             </div>
         </div>
     </section>
+ <!-- Bagian Mulai Donasi -->
+ <section class="bg-gradient-to-b from-cyan-100 to-white relative">
+    <div class="container mx-auto px-6 py-16">
+        <div class="flex flex-col md:flex-row items-center justify-between min-h-screen">
+            
+            <!-- Gambar Box di Kiri -->
+            <div class="flex-1 flex justify-start">
+                <img src="{{ asset('images/box1.png') }}" alt="Box" class="w-40 md:w-56">
+            </div>
 
-    <section>
+            <!-- Konten Teks di Kanan -->
+            <div class="flex-1 text-center md:text-left max-w-lg">
+                <h1 class="text-2xl font-bold text-gray-800">Mulai Donasi Sekarang!</h1>
+                
+                <p class="text-gray-600 mt-2">
+                    Setiap rupiah yang Anda donasikan akan digunakan secara transparan untuk membantu mereka yang terpuruk. 
+                    Tidak hanya bantuan, tetapi juga menyebarkan cinta dan kepedulian kepada sesama.
+                </p>
 
-        
+                <div class="mt-6">
+                    <a href="#" class="px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700">
+                        Mulai Donasi
+                    </a>
+                    <p class="mt-2 text-gray-500">
+                        atau <a href="#" class="text-blue-500 underline">Pelajari Cara Donasi</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    </section>
-
+    <!-- Background Wave -->
+    <div class="absolute bottom-0 left-0 w-full">
+        <img src="{{ asset('images/wave.png') }}" alt="Wave Background" class="w-full">
+    </div>
+</section>
 
 @endsection
