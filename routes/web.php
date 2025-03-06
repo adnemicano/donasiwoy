@@ -10,6 +10,7 @@ use App\Http\Controllers\Frontend\NewsController as FrontendNewsController;
 use App\Http\Controllers\Frontend\UserController as FrontendUserController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Campaign;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,8 @@ use Illuminate\Support\Facades\Route;
 
 // Route halaman utama
 Route::get('/', function () {
-    return view('pages.index');
+    $campaigns = app(CampaignController::class)->latestCampaigns(); // Call the method to get latest campaigns
+    return view('pages.index', compact('campaigns'));
 })->name('home');
 
 // Route untuk halaman frontend
@@ -38,8 +40,6 @@ Route::prefix('news')->group(function () {
     Route::get('/', [FrontendNewsController::class, 'index'])->name('news.index');
     Route::get('/{slug}', [FrontendNewsController::class, 'show'])->name('news.show');
 });
-
-
 
 // Route untuk halaman Cara Donasi
 Route::get('/cara-donasi', [CaraDonasiController::class, 'index'])->name('cara-donasi');
@@ -59,7 +59,6 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['au
     Route::resource('campaigns', 'CampaignController');
 
     Route::resource('news', 'NewsController');
-
 });
 
 // Route untuk autentikasi
@@ -81,4 +80,3 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/edit', [FrontendUserController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [FrontendUserController::class, 'update'])->name('profile.update');
 });
-

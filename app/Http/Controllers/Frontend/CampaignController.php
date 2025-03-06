@@ -31,6 +31,13 @@ class CampaignController extends Controller
         return view('pages.frontend.campaign.campaign', compact('campaigns'));
     }
 
+    public function latestCampaigns()
+    {
+        // This method retrieves the latest campaigns for the home page
+        $latestCampaigns = Campaign::orderBy('created_at', 'desc')->take(3)->get();
+        return $latestCampaigns; // Return latest campaigns
+    }
+
     public function show($slug)
     {
         $campaign = Campaign::where('slug', $slug)->firstOrFail();
