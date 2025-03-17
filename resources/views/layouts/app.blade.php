@@ -30,6 +30,20 @@
             color: #ffffff;
             padding: 40px 20px;
         }
+        @media (max-width: 768px) {
+        .donation-box {
+            flex-direction: column !important;
+        }
+        
+        .donation-image,
+        .donation-content {
+            flex: 0 0 100% !important;
+        }
+        
+        .donation-image {
+            margin-bottom: 2rem !important;
+        }
+    }
     </style>
 
 </head>
