@@ -43,4 +43,9 @@ class NewsController extends Controller
 
         return view('pages.frontend.news.news-detail', compact('news'));
     }
+
+    public function latestNews()
+    {
+        return News::orderBy('created_at', 'desc')->take(2)->get();
+    }
 }

@@ -25,8 +25,9 @@ use App\Models\Campaign;
 
 // Route halaman utama
 Route::get('/', function () {
-    $campaigns = app(CampaignController::class)->latestCampaigns(); // Call the method to get latest campaigns
-    return view('pages.index', compact('campaigns'));
+    $campaigns = app(CampaignController::class)->latestCampaigns(); // Ambil kampanye terbaru
+    $latestNews = app(FrontendNewsController::class)->latestNews(); // Ambil berita terbaru
+    return view('pages.index', compact('campaigns', 'latestNews'));
 })->name('home');
 
 // Route untuk halaman frontend

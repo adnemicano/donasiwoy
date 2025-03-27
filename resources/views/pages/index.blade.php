@@ -4,56 +4,39 @@
 
 @section('content')
 
-    <section style="background: linear-gradient(to bottom, #3AA597, #ECDFCC); padding: 50px 20px; margin-bottom: 3rem; height: 92vh;">
-        <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-            <!-- Judul -->
-            <h1 style="font-size: 2.5rem; font-weight: bold; color: #ffffff; margin-top: 52px;">
-                Bersama Donasi Woy,<br> Kita Wujudkan Perubahan!
-            </h1>
+    <section style="background: linear-gradient(to bottom, #3AA597, #ECDFCC); height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 50px 20px;">
 
-            <!-- Kontainer Konten -->
-            <div
-                style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; width: 100%; gap: 30px; margin-top: 8rem;">
-                <!-- Konten Kiri -->
-                <div style="flex: 1; text-align: center;">
-                    <h2 style="font-size: 2.5rem; font-weight: bold; color: #ffffff; margin-bottom: 10px;">Suara Anda.</h2>
-                    <p style="color: #ffffff; font-size: 1rem; margin-bottom: 20px;">Suarakan aksi nyata.</p>
-                    <button
-                        style="background-color: #3AA597; color: #ffffff; border: none; padding: 10px 20px; font-size: 1rem; border-radius: 5px; cursor: pointer;">
-                        PETISI
-                    </button>
-                </div>
+    <!-- Judul -->
+    <h1 style="font-size: 2rem; font-weight: bold; color: #ffffff; max-width: 800px; margin-top: 4rem;">
+        Aksi Nyata? Dimulai Dari Sini <br> Bersama Donasi Woy!
+    </h1>
 
-                <!-- Gambar Tengah -->
-                <div style="flex: 1; display: flex; justify-content: center;">
-                    <img src="{{ asset('assets/img/vektor-home.png') }}" alt="Gambar Orang"
-                        style="width: 160%; max-width: 800px; margin-bottom: -50px;" />
-                </div>
+    <!-- Tombol Donasi -->
+    <a href="{{ route('campaigns.index') }}"
+       style="background-color: #3AA597; color: #ffffff; text-decoration: none; padding: 12px 30px; font-size: 1rem; font-weight: bold; border-radius: 5px; margin-top: 20px; display: inline-block;">
+        DONASI
+    </a>
 
-                <!-- Konten Kanan -->
-                <div style="flex: 1; text-align: center;">
-                    <h2 style="font-size: 2.5rem; font-weight: bold; color: #ffffff; margin-bottom: 10px;">Aksi Nyata.</h2>
-                    <p style="color: #ffffff; font-size: 1rem; margin-bottom: 20px;">Jadikan perubahan bersama.</p>
-                    <button
-                        style="background-color: #3AA597; color: #ffffff; border: none; padding: 10px 20px; font-size: 1rem; border-radius: 5px; cursor: pointer;">
-                        <a href="{{ route('campaigns.index') }}" style="text-decoration: none; color: inherit;">DONASI</a>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Gambar Tengah -->
+    <div style="margin-top: 30px;">
+        <img src="{{ asset('assets/img/vektor-home.png') }}" alt="Gambar Orang" style="width: 700px; max-width: 100%;">
+    </div>
+
+</section>
+
 
     <section style="padding: 50px 0;">
-    <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-        @if ($campaigns->isEmpty())
-            <p style="text-align: center; color: #fff;">Belum ada campaign terbaru.</p>
-        @else
-            <div id="campaignCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            @if ($campaigns->isEmpty())
+                <p style="text-align: center; color: #fff;">Belum ada campaign terbaru.</p>
+            @else
+                <div id="campaignCarousel" class="carousel slide" data-bs-ride="carousel">
 
-                <div class="carousel-inner">
-                    @foreach ($campaigns as $key => $campaign)
-                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                            <div style="
+                    <div class="carousel-inner">
+                        @foreach ($campaigns as $key => $campaign)
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                <div
+                                    style="
                                 display: flex;
                                 flex-direction: row;
                                 align-items: center;
@@ -65,30 +48,31 @@
                                 background: linear-gradient(180deg, #ECDFCC 0%, #16423C 100%);
                                 box-shadow: 0 4px 8px rgba(0,0,0,0.2);
                             ">
-                                <!-- Thumbnail di kiri -->
-                                <div style="flex: 0 0 400px;">
-                                    <img src="{{ $campaign->thumbnail ? asset('storage/' . $campaign->thumbnail) : asset('assets/img/default-thumbnail.jpg') }}"
-                                        alt="{{ $campaign->title }}" style="
+                                    <!-- Thumbnail di kiri -->
+                                    <div style="flex: 0 0 400px;">
+                                        <img src="{{ $campaign->thumbnail ? asset('storage/' . $campaign->thumbnail) : asset('assets/img/default-thumbnail.jpg') }}"
+                                            alt="{{ $campaign->title }}"
+                                            style="
                                             width: 100%;
                                             height: 300px;
                                             border-radius: 15px;
                                             object-fit: cover;
                                         ">
-                                </div>
+                                    </div>
 
-                                <!-- Konten di kanan -->
-                                <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
-                                    <h3 style="font-size: 1.5rem; font-weight: bold; color:#16423C;">
-                                        {{ $campaign->title }}
-                                    </h3>
-                                    <p style="font-size: 1rem; color:#fff;">
-                                        {{ Str::limit($campaign->story, 250) }}
-                                    </p>
-                                    <p style="font-weight: 400; color:#fff;">
-                                        Target: Rp{{ number_format($campaign->target, 0, ',', '.') }}
-                                    </p>
-                                    <a href="{{ route('campaigns.show', $campaign->slug) }}"
-                                        style="
+                                    <!-- Konten di kanan -->
+                                    <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
+                                        <h3 style="font-size: 1.5rem; font-weight: bold; color:#16423C;">
+                                            {{ $campaign->title }}
+                                        </h3>
+                                        <p style="font-size: 1rem; color:#fff;">
+                                            {{ Str::limit($campaign->story, 250) }}
+                                        </p>
+                                        <p style="font-weight: 400; color:#fff;">
+                                            Target: Rp{{ number_format($campaign->target, 0, ',', '.') }}
+                                        </p>
+                                        <a href="{{ route('campaigns.show', $campaign->slug) }}"
+                                            style="
                                             padding: 10px 20px;
                                             background-color: #ECDFCC;
                                             color: #16423C;
@@ -98,27 +82,90 @@
                                             width: fit-content;
                                             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
                                         ">
-                                        Detail
-                                    </a>
+                                            Detail
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+
+                    <!-- Tombol navigasi -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#campaignCarousel"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#campaignCarousel"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+
                 </div>
+            @endif
+        </div>
 
-                <!-- Tombol navigasi -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#campaignCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#campaignCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+    </section>
 
+    <section
+        style="background: linear-gradient(to bottom, white 10%, #C4FBF3 50%, white); heig
+    ht: 100vh; padding: 50px 0;">
+        <div
+            style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+
+            <!-- Gambar Kotak Donasi -->
+            <div style="flex: -3; display: flex; justify-content: center;">
+                <img src="{{ asset('assets/img/boxxx.png') }}" alt="Kotak Donasi" style="width: 350px; max-width: 100%;">
             </div>
-        @endif
+
+            <!-- Teks Ajakan Donasi -->
+            <div style="flex: 1; text-align: center; padding: 20px; min-width: 300px;">
+                <h2 style="font`-size: 28px; font-weight: bold; color: #16423C; margin-bottom: 15px;">
+                    Mulai Donasi Sekarang!
+                </h2>
+                <p style="font-size: 16px; color: #16423C; line-height: 1.6;">
+                    Setiap rupiah yang Anda donasikan akan digunakan secara transparan untuk membantu mereka yang terpuruk.
+                    Tidak hanya bantuan, tetapi juga menyebarkan cinta dan kepedulian kepada sesama.
+                </p>
+                <button
+                    style="background-color: #16423C; color: white; padding: 12px 20px; border-radius: 5px; text-decoration: none; font-size: 14px; font-weight: bold;">
+                    <a href="{{ route('campaigns.index') }}" style="text-decoration: none; color: #fff;">Mulai donasi</a>
+                </button>
+                <p style="margin-top: 1rem"><a href="{{ route('cara-donasi') }}"
+                        style="color: #16423C; font-weight: 600; margin-top: 15px; text-decoration: none; font-size: 14px;">
+                        atau <span style="color: #1456DB">Pelajari Cara Donasi</span>
+                    </a></p>
+            </div>
+        </div>
+        <img src="{{ asset('assets/img/wave.png') }}" alt="" style="width: 100%; display: block;">
+
+    </section>
+
+    <div class="container my-5">
+        <h2 class="mb-4">Berita Terbaru</h2>
+        <div class="row">
+            @foreach ($latestNews as $news)
+                <div class="col-md-6 mb-4">
+                    <a href="{{ route('news.show', $news->slug) }}" class="text-decoration-none text-dark">
+                        <div class="card shadow-sm">
+                            <img src="{{ $news->image_url }}" class="card-img-top" alt="{{ $news->title }}"
+                                style="height: 250px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $news->title }}</h5>
+                                <p class="text-muted small">
+                                    {{ \Carbon\Carbon::parse($news->created_at)->translatedFormat('d F Y') }}
+                                </p>
+                                <p class="card-text">{{ Str::limit($news->content, 100, '...') }}</p>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            @endforeach
+        </div>
     </div>
+<<<<<<< HEAD
 </section>
 
   <!-- resources/views/components/donation-section.blade.php -->
@@ -147,6 +194,8 @@
 
 
 
+=======
+>>>>>>> 8a81256 (indexdone)
 
 
 @endsection
