@@ -49,6 +49,7 @@ Route::get('/cara-donasi', [CaraDonasiController::class, 'index'])->name('cara-d
 Route::middleware(['auth'])->group(function () {
     // Donasi
     Route::post('/donasi', [DonationController::class, 'store'])->name('donation.store');
+    Route::post('/donasi/confirm', [DonationController::class, 'confirmDonation'])->name('donation.confirm');
 });
 
 // Route untuk halaman admin dengan middleware "auth"

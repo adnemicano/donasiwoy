@@ -13,8 +13,7 @@ class CampaignDonation extends Model
         'campaign_id',
         'user_id',
         'value',
-        'status'
+        'status',
+        'is_anonymous'
     ];
-
-    
 }
