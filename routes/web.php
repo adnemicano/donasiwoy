@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Frontend\NewsController as FrontendNewsController;
 use App\Http\Controllers\Frontend\UserController as FrontendUserController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Campaign;
 
@@ -81,4 +82,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [FrontendUserController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [FrontendUserController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [FrontendUserController::class, 'update'])->name('profile.update');
+    Route::get('/profile/donations', [app\Http\Controllers\Frontend\ProfileController::class, 'donations'])->name('profile.donations');
+    Route::get('/profile/settings', [App\Http\Controllers\Frontend\ProfileController::class, 'settings'])->name('profile.settings');
 });
+
+Route::get('/campaign/{slug}', [CampaignController::class, 'show'])->name('campaign.show');
