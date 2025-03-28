@@ -165,37 +165,5 @@
             @endforeach
         </div>
     </div>
-<<<<<<< HEAD
-</section>
-
-  <!-- resources/views/components/donation-section.blade.php -->
-  <section style="position: relative; padding: 2rem 1rem; background-color: #e6f7f2; overflow: hidden; min-height: 400px;">
-    <div style="max-width: 1200px; margin: 0 auto; position: relative; z-index: 10;">
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: 2rem 0;">
-            <div style="flex: 0 0 40%;">
-                <img src="{{ asset('assets/img/box1.png') }}" alt="Donation Box" style="max-width: 100%; height: auto;">
-            </div>
-            <div style="flex: 0 0 55%;">
-                <h2 style="font-size: 2rem; color: #2d3748; margin-bottom: 1rem;">Mulai Donasi Sekarang!</h2>
-                <p style="font-size: 1rem; color: #4a5568; line-height: 1.6; margin-bottom: 1.5rem;">Setiap rupiah yang Anda donasikan akan digunakan secara transparan untuk membantu mereka yang terpuruk. Tidak hanya bantuan, tetapi juga menyebarkan cinta dan kepedulian kepada sesama.</p>
-                <div style="display: flex; align-items: center;">
-                    <a href="#" style="display: inline-block; padding: 0.75rem 1.5rem; font-size: 1rem; text-decoration: none; border-radius: 5px; font-weight: 500; background-color: #2d8b61; color: white; border: none;">Mulai donasi</a>
-                    <span style="margin: 0 1rem; color: #4a5568;">atau</span>
-                    <a href="#" style="display: inline-block; padding: 0.75rem 1.5rem; font-size: 1rem; text-decoration: none; color: #2d8b61; text-decoration: underline;">Pelajari Cara Donasi</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 40%; background-image: url('{{ asset("assets/img/wave.svg") }}'); background-size: cover; background-position: center; z-index: 1;"></div>
-</section>
-
-
-
-
-
-
-=======
->>>>>>> 8a81256 (indexdone)
-
 
 @endsection
