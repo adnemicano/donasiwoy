@@ -3,21 +3,34 @@
 @section('title', 'Donasi')
 
 @section('content')
-    <div class="container mt-5 d-flex justify-content-center align-items-center">
-        <div class="card">
-            <div class="card-body">
-                <p>Anda akan berdonasi sebesar <strong>{{ number_format($details['amount']) }}</strong></p>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header bg-white">
+                        <h4 class="mb-0 text-center">Konfirmasi Donasi</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <div class="fs-4 fw-bold mb-2">Rp{{ number_format($details['amount'], 0, ',', '.') }}</div>
+                            <p class="text-muted">Anda akan berdonasi sebesar nominal di atas</p>
+                        </div>
 
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="anonymousCheckbox">
-                    <label class="form-check-label" for="anonymousCheckbox">
-                        Donasi sebagai anonim
-                    </label>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="anonymousCheckbox">
+                            <label class="form-check-label" for="anonymousCheckbox">
+                                <i class="fas fa-user-secret me-1"></i> Sembunyikan nama saya (donasi sebagai Anonim)
+                            </label>
+                            <small class="form-text text-muted d-block mt-1">
+                                Jika dicentang, nama Anda tidak akan ditampilkan di daftar donatur
+                            </small>
+                        </div>
+
+                        <button type="button" class="btn btn-primary w-100 mt-3" id="btnPay">
+                            <i class="fas fa-credit-card me-2"></i> Lanjutkan Pembayaran
+                        </button>
+                    </div>
                 </div>
-
-                <button type="button" class="btn btn-primary mt-3" id="btnPay">
-                    Bayar
-                </button>
             </div>
         </div>
     </div>
@@ -53,7 +66,9 @@
                     transaction_id: result.transaction_id,
                     order_id: result.order_id,
                     status: result.transaction_status,
-                    is_anonymous: isAnonymous
+                    is_anonymous: isAnonymous,
+                    campaign_id: {{ $details['campaign_id'] }},
+                    amount: {{ $details['amount'] }}
                 })
             }).then(response => response.json())
               .then(data => {

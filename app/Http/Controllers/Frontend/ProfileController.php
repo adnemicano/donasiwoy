@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
-use App\Models\Donation;
+use App\Models\CampaignDonation;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -25,7 +26,7 @@ class ProfileController extends Controller
             }
 
             $path = $request->file('profile_photo')->store('profile-photos', 'public');
-            
+
             $user->profile_photo = $path;
             $user->save();
 
@@ -41,27 +42,39 @@ class ProfileController extends Controller
         $donations = collect([]);
 
         if (Auth::check()) {
-            $donations = Donation::where('user_id', Auth::id())
+            // Get the user ID
+            $userId = Auth::id();
+
+            // Log the user ID for debugging
+            Log::info('Fetching donations for user ID: ' . $userId);
+
+            // Use a more specific query to fetch the donations
+            $donations = CampaignDonation::where('user_id', $userId)
                             ->with('campaign')
                             ->orderBy('created_at', 'desc')
+                            ->take(5)
                             ->get();
+
+            // Log the count of donations found
+            Log::info('Found ' . $donations->count() . ' donations');
         }
-        
+
         return view('pages.frontend.user.profile', compact('user', 'donations'));
     }
 
-    public function donations()
+    public function donation()
     {
-        $user = Auth::user(); // Retrieve the authenticated user
-        $donations = collect([]);
+        $donations = CampaignDonation::where('user_id', Auth::id())
+                        ->with('campaign')
+                        ->orderBy('created_at', 'desc')
+                        ->get();
 
-        if (Auth::check()) {
-            $donations = Donation::where('user_id', Auth::id())
-                            ->with('campaign')
-                            ->orderBy('created_at', 'desc')
-                            ->get();
-        }
+        return view('pages.frontend.user.history-donation', compact('donations'));
+    }
 
-        return view('pages.frontend.user.donations', compact('user', 'donations')); // Corrected view path
+    public function settings()
+    {
+        $user = Auth::user();
+        return view('pages.frontend.user.settings', compact('user'));
     }
 }

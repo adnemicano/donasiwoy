@@ -23,18 +23,37 @@ class NewsController extends Controller
             $query->orderBy('created_at', 'desc');
         } elseif ($request->has('sort') && $request->sort == 'oldest') {
             $query->orderBy('created_at', 'asc');
+        } else {
+            // Default sort by newest if no sort is specified
+            $query->orderBy('created_at', 'desc');
         }
 
         // Paginate the results
         $news = $query->paginate(6); // Tampilkan 6 berita per halaman
 
-        // Ambil 3 berita utama
+        // Ambil 3 berita utama untuk headline
         $headlineNews = News::orderBy('created_at', 'desc')->take(3)->get();
 
-        // Ambil 3 berita terbaru (tidak termasuk headline)
-        $latestNews = News::orderBy('created_at', 'desc')->skip(3)->take(3)->get();
+        // Get headline IDs to exclude from latest news
+        $headlineIds = $headlineNews->pluck('id');
 
-        return view('pages.frontend.news.news', compact('news','headlineNews', 'latestNews'));
+        // Ambil berita terbaru (tidak termasuk headline)
+        // Make sure we always have data in latestNews
+        if ($headlineNews->count() > 0) {
+            $latestNews = News::whereNotIn('id', $headlineIds)
+                ->orderBy('created_at', 'desc')
+                ->take(5)
+                ->get();
+        } else {
+            $latestNews = News::orderBy('created_at', 'desc')->take(5)->get();
+        }
+
+        // Fallback: If still no latest news, just use recent entries
+        if ($latestNews->count() == 0) {
+            $latestNews = News::orderBy('created_at', 'desc')->take(5)->get();
+        }
+
+        return view('pages.frontend.news.news', compact('news', 'headlineNews', 'latestNews'));
     }
 
     public function show($slug)

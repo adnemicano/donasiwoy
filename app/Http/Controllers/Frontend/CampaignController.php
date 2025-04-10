@@ -42,6 +42,12 @@ class CampaignController extends Controller
     {
         $campaign = Campaign::where('slug', $slug)->firstOrFail();
 
-        return view('pages.frontend.campaign.campaign-detail', compact('campaign'));
+        // Check if the campaign has ended / expired
+        $isExpired = false;
+    if ($campaign->end_date && \Carbon\Carbon::parse($campaign->end_date)->isPast()) {
+        $isExpired = true;
+    }
+
+    return view('pages.frontend.campaign.campaign-detail', compact('campaign', 'isExpired'));
     }
 }

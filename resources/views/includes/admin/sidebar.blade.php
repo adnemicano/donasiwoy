@@ -29,6 +29,12 @@
             <span>Campaign</span></a>
     </li>
 
+    <li class="nav-item @if (request()->is('admin/donations*')) active @endif">
+        <a class="nav-link" href="{{ route('admin.donations.index') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Donasi</span></a>
+    </li>
+
     <li class="nav-item @if (request()->is('admin/news*')) active @endif">
         <a class="nav-link" href="{{ route('admin.news.index') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>

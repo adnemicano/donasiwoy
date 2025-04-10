@@ -51,7 +51,8 @@ class NewsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $news = News::findOrFail($id);
+        return view('pages.admin.news.show', compact('news'));
     }
 
     /**

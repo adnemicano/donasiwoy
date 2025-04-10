@@ -19,7 +19,7 @@ class CampaignController extends Controller
         $campaigns = Campaign::all();
         return view('pages.admin.campaign.index', compact('campaigns'));
     }
-    
+
     /**
      * Menampilkan halaman untuk membuat campaign baru.
      */
@@ -58,6 +58,15 @@ class CampaignController extends Controller
     {
         $campaign = Campaign::findOrFail($id);
         return view('pages.admin.campaign.edit', compact('campaign'));
+    }
+
+    /**
+     * Menampilkan detail campaign.
+     */
+    public function show(string $id)
+    {
+        $campaign = Campaign::findOrFail($id);
+        return view('pages.admin.campaign.show', compact('campaign'));
     }
 
     /**

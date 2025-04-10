@@ -17,4 +17,19 @@ class Campaign extends Model
         'target',
         'end_date'
     ];
+
+    public function donations()
+    {
+        return $this->hasMany(CampaignDonation::class);
+    }
+
+    public function getTotalDonationsAttribute()
+    {
+        return $this->donations()->where('status', 'succes')->sum('value');
+    }
+
+    public function getDonorsCountAttribute()
+    {
+        return $this->donations()->where('status', 'succes')->distinct('user_id')->count('user_id');
+    }
 }
