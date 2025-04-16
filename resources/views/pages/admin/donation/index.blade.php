@@ -23,8 +23,9 @@
                             <label class="form-label fw-bold">Kampanye</label>
                             <select name="campaign_id" class="form-control form-select custom-select">
                                 <option value="">Semua Kampanye</option>
-                                @foreach($campaigns as $campaign)
-                                    <option value="{{ $campaign->id }}" {{ request('campaign_id') == $campaign->id ? 'selected' : '' }}>
+                                @foreach ($campaigns as $campaign)
+                                    <option value="{{ $campaign->id }}"
+                                        {{ request('campaign_id') == $campaign->id ? 'selected' : '' }}>
                                         {{ $campaign->title }}
                                     </option>
                                 @endforeach
@@ -36,8 +37,10 @@
                             <select name="status" class="form-control form-select custom-select">
                                 <option value="">Semua Status</option>
                                 <option value="succes" {{ request('status') == 'succes' ? 'selected' : '' }}>Sukses</option>
-                                <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                                <option value="waiting" {{ request('status') == 'waiting' ? 'selected' : '' }}>Menunggu</option>
+                                <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending
+                                </option>
+                                <option value="waiting" {{ request('status') == 'waiting' ? 'selected' : '' }}>Menunggu
+                                </option>
                                 <option value="failed" {{ request('status') == 'failed' ? 'selected' : '' }}>Gagal</option>
                             </select>
                         </div>
@@ -46,9 +49,12 @@
                             <label class="form-label fw-bold">Periode</label>
                             <select name="period" class="form-control form-select custom-select">
                                 <option value="">Semua Waktu</option>
-                                <option value="today" {{ request('period') == 'today' ? 'selected' : '' }}>Hari Ini</option>
-                                <option value="week" {{ request('period') == 'week' ? 'selected' : '' }}>Minggu Ini</option>
-                                <option value="month" {{ request('period') == 'month' ? 'selected' : '' }}>Bulan Ini</option>
+                                <option value="today" {{ request('period') == 'today' ? 'selected' : '' }}>Hari Ini
+                                </option>
+                                <option value="week" {{ request('period') == 'week' ? 'selected' : '' }}>Minggu Ini
+                                </option>
+                                <option value="month" {{ request('period') == 'month' ? 'selected' : '' }}>Bulan Ini
+                                </option>
                             </select>
                         </div>
 
@@ -60,7 +66,7 @@
                     </div>
 
                     <!-- Clear filters option -->
-                    @if(request()->has('campaign_id') || request()->has('status') || request()->has('period'))
+                    @if (request()->has('campaign_id') || request()->has('status') || request()->has('period'))
                         <div class="text-end mt-2">
                             <a href="{{ route('admin.donations.index') }}" class="text-decoration-none small">
                                 <i class="fas fa-times-circle"></i> Reset Filter
@@ -164,69 +170,73 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($donations as $donation)
-                        <tr>
-                            <td>{{ $donation->id }}</td>
-                            <td>{{ $donation->created_at->format('d M Y H:i') }}</td>
-                            <td>
-                                @if($donation->is_anonymous)
-                                    <span class="badge bg-secondary text-white">
-                                        <i class="fas fa-user-secret me-1"></i> Anonim
-                                    </span>
-                                @else
-                                    <span class="fw-bold">{{ $donation->user->fullname ?? 'N/A' }}</span>
-                                    <br>
-                                    <small class="text-muted">{{ $donation->user->email ?? '' }}</small>
-                                @endif
-                            </td>
-                            <td>
-                                @if($donation->campaign)
-                                    <a href="{{ route('admin.donations.campaign', $donation->campaign_id) }}" class="text-primary fw-bold">
-                                        {{ Str::limit($donation->campaign->title, 45) }}
+                        @foreach ($donations as $donation)
+                            <tr>
+                                <td>{{ $donation->id }}</td>
+                                <td>{{ $donation->created_at->format('d M Y H:i') }}</td>
+                                <td>
+                                    @if ($donation->is_anonymous)
+                                        <span class="badge bg-secondary text-white">
+                                            <i class="fas fa-user-secret me-1"></i> Anonim
+                                        </span>
+                                    @else
+                                        <span class="fw-bold">{{ $donation->user->fullname ?? 'N/A' }}</span>
+                                        <br>
+                                        <small class="text-muted">{{ $donation->user->email ?? '' }}</small>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($donation->campaign)
+                                        <a href="{{ route('admin.donations.campaign', $donation->campaign_id) }}"
+                                            class="text-primary fw-bold">
+                                            {{ Str::limit($donation->campaign->title, 45) }}
+                                        </a>
+                                    @else
+                                        <span class="text-muted">Kampanye tidak tersedia</span>
+                                    @endif
+                                </td>
+                                <td class="fw-bold">Rp {{ number_format($donation->value, 0, ',', '.') }}</td>
+                                <td>
+                                    @if ($donation->status == 'succes')
+                                        <span class="badge bg-success">Sukses</span>
+                                    @elseif($donation->status == 'pending')
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    @elseif($donation->status == 'waiting')
+                                        <span class="badge bg-info text-dark">Menunggu</span>
+                                    @else
+                                        <span class="badge bg-danger">Gagal</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('admin.donations.show', $donation->id) }}"
+                                        class="btn btn-sm btn-info">
+                                        <i class="fas fa-eye"></i> Detail
                                     </a>
-                                @else
-                                    <span class="text-muted">Kampanye tidak tersedia</span>
-                                @endif
-                            </td>
-                            <td class="fw-bold">Rp {{ number_format($donation->value, 0, ',', '.') }}</td>
-                            <td>
-                                @if($donation->status == 'succes')
-                                    <span class="badge bg-success">Sukses</span>
-                                @elseif($donation->status == 'pending')
-                                    <span class="badge bg-warning text-dark">Pending</span>
-                                @elseif($donation->status == 'waiting')
-                                    <span class="badge bg-info text-dark">Menunggu</span>
-                                @else
-                                    <span class="badge bg-danger">Gagal</span>
-                                @endif
-                            </td>
-                            <td>
-                                <a href="{{ route('admin.donations.show', $donation->id) }}" class="btn btn-sm btn-info">
-                                    <i class="fas fa-eye"></i> Detail
-                                </a>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
 
-            <div class="mt-4">
-                {{ $donations->withQueryString()->links() }}
+            <!-- Pagination -->
+            <div class="d-flex justify-content-end mt-4">
+                {{ $donations->withQueryString()->links('pagination::bootstrap-4') }}
             </div>
+
         </div>
     </div>
 @endsection
 
 @section('script')
-<script>
-    // Add custom styling for select inputs
-    $(document).ready(function() {
-        $('.custom-select').select2({
-            theme: 'bootstrap4',
-            placeholder: 'Pilih opsi',
-            allowClear: true
+    <script>
+        // Add custom styling for select inputs
+        $(document).ready(function() {
+            $('.custom-select').select2({
+                theme: 'bootstrap4',
+                placeholder: 'Pilih opsi',
+                allowClear: true
+            });
         });
-    });
-</script>
+    </script>
 @endsection

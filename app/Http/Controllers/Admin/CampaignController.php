@@ -16,9 +16,10 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        $campaigns = Campaign::all();
+        $campaigns = Campaign::latest()->paginate(10);
         return view('pages.admin.campaign.index', compact('campaigns'));
     }
+
 
     /**
      * Menampilkan halaman untuk membuat campaign baru.

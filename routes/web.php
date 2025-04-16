@@ -48,10 +48,22 @@ Route::get('/cara-donasi', [CaraDonasiController::class, 'index'])->name('cara-d
 
 // Route untuk user yang membutuhkan autentikasi
 Route::middleware(['auth'])->group(function () {
-    // Donasi
+    // Initial donation process
     Route::post('/donasi', [DonationController::class, 'store'])->name('donation.store');
+
+    // Donation details and payment method
+    Route::get('/donasi/{id}/details', [DonationController::class, 'details'])->name('donation.details');
+    Route::post('/donasi/{id}/process', [DonationController::class, 'processPayment'])->name('donation.process');
+
+    // Donation status page
+    Route::get('/donasi/{id}/status', [DonationController::class, 'status'])->name('donation.status');
+    Route::get('/donasi/{id}/check-status', [DonationController::class, 'checkStatus'])->name('donation.check-status');
+
+    // Tambahkan route untuk konfirmasi donasi
     Route::post('/donasi/confirm', [DonationController::class, 'confirmDonation'])->name('donation.confirm');
 });
+// callback route for Midtrans
+Route::post('/midtrans/callback', [DonationController::class, 'midtransCallback'])->name('midtrans.callback');
 
 // Route untuk halaman admin dengan middleware "auth"
 Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['auth'])->name('admin.')->group(function () {
@@ -61,7 +73,15 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['au
     // CRUD untuk campaigns
     Route::resource('campaigns', 'CampaignController');
 
+    // CRUD untuk news
     Route::resource('news', 'NewsController');
+
+    // Management donations
+    Route::get('/donations', 'DonationController@index')->name('donations.index');
+    Route::get('/donations/{id}', 'DonationController@show')->name('donations.show');
+    Route::patch('/donations/{id}/status', 'DonationController@updateStatus')->name('donations.update-status');
+    Route::get('/donations/campaign/{campaignId}', 'DonationController@campaignDonations')->name('donations.campaign');
+    Route::get('/reports/donations', 'DonationController@reports')->name('donations.reports');
 });
 
 // Route untuk autentikasi
@@ -82,7 +102,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [FrontendUserController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [FrontendUserController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [FrontendUserController::class, 'update'])->name('profile.update');
-    Route::get('/profile/donations', [app\Http\Controllers\Frontend\ProfileController::class, 'donations'])->name('profile.donations');
+    Route::get('/profile/donations', [App\Http\Controllers\Frontend\ProfileController::class, 'donation'])->name('profile.donations');
     Route::get('/profile/settings', [App\Http\Controllers\Frontend\ProfileController::class, 'settings'])->name('profile.settings');
 });
 

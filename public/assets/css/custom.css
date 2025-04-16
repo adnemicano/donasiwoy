@@ -1,0 +1,93 @@
+
+
+/* Color Palette */
+:root {
+    --primary-dark: #16423C;
+    --primary: #3AA597;
+    --accent: #82EBE0;
+    --background: #ECDFCC;
+}
+
+/* Header */
+.card-header {
+    background-color: var(--primary-dark);
+    color: white;
+}
+
+.card-header h6 {
+    color: var(--accent);
+}
+
+/* Filter Box */
+.filter-box {
+    background-color: var(--background);
+    border-left: 5px solid var(--primary);
+}
+
+.filter-box .form-label {
+    color: var(--primary-dark);
+}
+
+/* Summary Cards */
+.card.border-left-primary {
+    border-left: 0.25rem solid var(--primary-dark) !important;
+}
+
+.card.border-left-success {
+    border-left: 0.25rem solid #28a745 !important;
+}
+
+.card.border-left-warning {
+    border-left: 0.25rem solid #ffc107 !important;
+}
+
+.card.border-left-danger {
+    border-left: 0.25rem solid #dc3545 !important;
+}
+
+.card-body .text-primary,
+.card-body .text-success,
+.card-body .text-warning,
+.card-body .text-danger {
+    font-weight: 600;
+}
+
+/* Table */
+table thead {
+    background-color: var(--primary);
+    color: white;
+}
+
+table tbody tr:hover {
+    background-color: #f1fdfc;
+}
+
+.badge.bg-success {
+    background-color: var(--primary) !important;
+}
+
+.btn-info {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: #16423C;
+}
+
+.btn-info:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* Reset Filter Link */
+.reset-filter-link {
+    color: var(--primary-dark);
+}
+
+.reset-filter-link:hover {
+    text-decoration: underline;
+}
+
+/* Select2 */
+.select2-container--bootstrap4 .select2-selection {
+    border-color: var(--primary);
+}
+

@@ -58,7 +58,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>DonasiWoy! &copy; 2025</span>
                     </div>
                 </div>
             </footer>
@@ -95,25 +95,28 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-    <script src="{{ asset('asstes/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- Bootstrap core JavaScript (jQuery & Bootstrap Bundle with Popper.js) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+<!-- Core plugin JavaScript -->
+<script src="{{ asset('assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('assets/js/sb-admin-2.min.js')}}"></script>
+<!-- Custom scripts for all pages -->
+<script src="{{ asset('assets/js/sb-admin-2.min.js')}}"></script>
 
-    <!-- Page level plugins -->
-    <script src="{{ asset('assets/vendor/chart.js/Chart.min.js')}}"></script>
+<!-- Page level plugins -->
+<script src="{{ asset('assets/vendor/chart.js/Chart.min.js')}}"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="{{ asset('assets/js/demo/chart-area-demo.js')}}"></script>
-    <script src="{{ asset('assets/js/demo/chart-pie-demo.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/gh/xrafffcode/flex-uploader/dist/js/flex-uploader.js"></script>
+<!-- Page level custom scripts -->
+<script src="{{ asset('assets/js/demo/chart-area-demo.js')}}"></script>
+<script src="{{ asset('assets/js/demo/chart-pie-demo.js')}}"></script>
 
-    @yield('script')
+<!-- Flex Uploader -->
+<script src="https://cdn.jsdelivr.net/gh/xrafffcode/flex-uploader/dist/js/flex-uploader.js"></script>
+
+@yield('script')
+
 
 </body>
 

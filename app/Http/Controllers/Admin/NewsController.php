@@ -17,9 +17,10 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::all();
+        $news = News::latest()->paginate(10);
         return view('pages.admin.news.index', compact('news'));
     }
+
 
     /**
      * Show the form for creating a new resource.
